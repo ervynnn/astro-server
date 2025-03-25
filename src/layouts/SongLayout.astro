@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+
+type Props = CollectionEntry<'song'>['data'];
+
+const { title, author, category, img, ytlink, lyrics } = Astro.props;
+---
+
+<BaseLayout bg={img}>
+    <div class="w-full flex flex-col items-center gap-4">
+        <div class="w-5xl flex flex-row items-center gap-8 my-8">
+            {img && <img class="w-72 object-cover" src={img} alt="" />}
+            <div>
+                <h3 class="font-bold text-primary drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">{title}</h3>
+                <h4 class="font-medium text-white drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">{author}</h4>
+                <p class="mt-4 bg-white rounded-md border-1 border-foreground/50 w-fit px-4"> {category} </p>
+            </div>
+        </div>
+        <div class="w-full flex flex-col gap-2 bg-secondary items-center">
+            
+            <div class="w-5xl grid grid-cols-2 items-start my-8">
+                <div class="flex flex-row justify-between col-span-2">
+                    <h3 class="font-semibold">Lyrics</h3>
+                    <a href={`/songs`} class="flex items-center justify-end gap-2">
+                        <Button variant={'outline'} className='hover:text-primary transition-colors duration-200'>
+                            <ArrowLeftIcon className="w-6"/>
+                            <p>Back</p>
+                        </Button>
+                    </a>
+                </div>
+                <Separator className='col-span-2'/>
+                <p class="w-2xl mt-4 whitespace-pre-line">
+                    {lyrics}
+                </p>
+                <div class="flex flex-col gap-4">
+                    <iframe 
+                    class="w-full max-w-2xl aspect-video mt-4" 
+                    src={`https://www.youtube-nocookie.com/embed/${ytlink}`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                    />
+                </div>
+            </div>
+        </div>
+        <slot />
+    </div>
+</BaseLayout>
+

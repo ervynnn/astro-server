@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const songs = await getCollection('song');
+---
+
+<BaseLayout>
+	<section>
+		<div class="flex flex-row justify-center my-8">
+			<h3 class="font-semibold">FAVORITE MUSIC</h3>
+		</div>
+
+		<ul class="grid grid-cols-3 gap-8">
+			{
+				songs.map((song) => (
+					<li>
+						<a href={`/songs/${song.id}/`} class="flex flex-col gap-2">
+							<img class="w-72 border-1 border-foreground" src={song.data.img} alt="" />
+							<div>
+								<h4 class="font-semibold">{song.data.title}</h4>
+								<p class="text-foreground/60"> {song.data.author}</p>
+							</div>
+						</a>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</BaseLayout>

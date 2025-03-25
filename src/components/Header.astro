@@ -6,7 +6,7 @@ import { ModeToggle } from './ModeToggle';
 
 <header class="z-50 top-0 sticky w-full m-0 py-2 px-5 bg-background bg-op shadow-sm border-b">
 	<nav class="flex flex-row justify-between items-center">
-		<h2 class="flex flex-row w-16 items-center gap-2">
+		<h2 class="flex flex-row w-32 items-center gap-2">
 			<img class="w-16 object-contain" src="/favicon.svg"/>
 			<a href="/" class="items-center gap-2 text-xl font-bold">
 				{SITE_TITLE}
@@ -16,6 +16,8 @@ import { ModeToggle } from './ModeToggle';
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/songs">Songs</HeaderLink>
 		</div>
-		<ModeToggle client:load/>
+		<div class="flex w-32 justify-end">
+			<ModeToggle client:load/>
+		</div> 
 	</nav>
 </header>

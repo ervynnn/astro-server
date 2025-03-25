@@ -1,8 +1,8 @@
 ---
-title: 'Left-Right Confusion'
+title: '左右盲 - Left-Right Confusion'
 author: 'Yorushika'
 category: 'JPop'
-img: '/images/song-img-1.png'
+img: '/images/song-img-1.jpg'
 ytlink: '1IlTeOMCNJU'
 lyrics: |
     君の右手は頬を突いている

@@ -1,5 +1,5 @@
 ---
-title: 'Say It'
+title: '言って。- Say It.'
 author: 'Yorushika'
 category: 'JPop'
 img: '/images/song-img-4.jpg'

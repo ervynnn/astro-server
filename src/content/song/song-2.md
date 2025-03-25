@@ -1,5 +1,5 @@
 ---
-title: 'Setting Sun'
+title: '斜陽 - Setting Sun'
 author: 'Yorushika'
 category: 'JPop'
 img: '/images/song-img-2.png'

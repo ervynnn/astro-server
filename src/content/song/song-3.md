@@ -1,5 +1,5 @@
 ---
-title: 'Thoughtcrime'
+title: '思想犯 - Thoughtcrime'
 author: 'Yorushika'
 category: 'JPop'
 img: '/images/song-img-3.jpg'

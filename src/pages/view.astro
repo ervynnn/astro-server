@@ -1,0 +1,45 @@
+---
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+import { TrashIcon } from "@heroicons/react/24/outline";
+
+const res = await fetch(`${import.meta.env.SITE}/api/songs.json`);
+const songs = await res.json();
+---
+
+<BaseLayout>
+    <div class="flex flex-col w-4xl gap-3">
+        <div class="flex flex-col items-center gap-2 justify-center mb-8">
+            <h2 class="font-semibold text-primary drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">Song List</h2>
+            <a href="/add">
+                <Button variant={'outline'} className='font-bold'>Add Song</Button>
+            </a>
+        </div>
+        {songs.map((song: { id: unknown, title: unknown; author: unknown; lyrics: unknown; }, index: number) => (
+            <div class="flex flex-row justify-between items-center gap-4">
+                <div class="flex flex-col">
+                    <h4 class="font-semibold">{index + 1}. {song.title}</h4>
+                    <p class="text-foreground/60">{song.author}</p>
+                </div>
+                <Button variant={'destructive'} data-id={String(song.id)} aria-label='Delete Songs' client:load>
+                    <TrashIcon/> Delete
+                </Button>
+            </div>
+             <Separator/>
+        ))}
+    </div>
+    <script>
+        const deleteBtns = document.querySelectorAll("[data-id]") as NodeListOf<HTMLButtonElement>;
+
+        deleteBtns.forEach(btn => btn.addEventListener("click", async (e) => {
+            const id = btn.dataset.id;
+            const res = await fetch(`/api/songs/${id}.json`,  {
+                method: "DELETE",
+            });
+            const { message } = await res.json();
+            console.log("message: ", message);
+        }));
+    </script>
+</BaseLayout>

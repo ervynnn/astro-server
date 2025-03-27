@@ -5,6 +5,8 @@ import Header from '../components/Header.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import "../styles/global.css";
 
+import { Toaster } from "@/components/ui/sonner";
+
 const { title = SITE_TITLE , description = SITE_DESCRIPTION, bg } = Astro.props;
 ---
 
@@ -17,12 +19,13 @@ const { title = SITE_TITLE , description = SITE_DESCRIPTION, bg } = Astro.props;
         <meta name = "generator" content= {Astro.generator} />
         <BaseHead title={title} description={description} />
 	</head>
-	<body class={`flex flex-col min-h-screen shadow-sm bg-cover bg-center bg-no-repeat backdrop-blur-sm bg-secondary`}
+	<body class={`flex flex-col min-h-screen shadow-sm bg-cover bg-center bg-no-repeat backdrop-blur-sm bg-secondary overflow-x-hidden`}
           style={bg ? `background-image: url('${bg}');` : ''}>
-        <Header />
+        <Header/>
             <main class={`flex w-full justify-center grow ${bg ? ``:`p-8`}`} >
                 <slot />
             </main>
-        <Footer />
+            <Toaster position='top-center' client:only="react" />
+        <Footer/>
 	</body>
 </html>

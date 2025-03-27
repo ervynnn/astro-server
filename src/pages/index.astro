@@ -1,10 +1,20 @@
 ---
-import { getCollection } from 'astro:content';
+//import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+// data types
+import type { Song } from '@/data/type/song';
 
-const data4 = await getCollection("song");
+/*
+const data4 = (await getCollection("song")).sort(
+(a, z) => z.data.releaseDate.valueOf() - a.data.releaseDate.valueOf(),);;
+*/
 
-const img = data4[0].data.img;
+const res = await fetch(`${import.meta.env.SITE}/api/songs.json`);
+const songs = await res.json();
+songs.sort((a: Song, b: Song) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
+const img = songs[0].img;
+
+await fetch(`${import.meta.env.SITE}/api/init/`);
 ---
 
 <BaseLayout bg={img}>

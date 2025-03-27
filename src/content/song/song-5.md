@@ -3,6 +3,7 @@ title: '晴る - Sunny'
 author: 'Yorushika'
 category: 'JPop'
 img: '/images/song-img-5.png'
+releaseDate: 'January 5 2024'
 ytlink: 'CkvWJNt77mU'
 lyrics: |
     貴方は風のように

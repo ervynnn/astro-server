@@ -3,6 +3,7 @@ title: '言って。- Say It.'
 author: 'Yorushika'
 category: 'JPop'
 img: '/images/song-img-4.jpg'
+releaseDate: 'June 28 2017'
 ytlink: 'F64yFFnZfkI'
 lyrics: |
     言って

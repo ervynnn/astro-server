@@ -3,6 +3,7 @@ title: '左右盲 - Left-Right Confusion'
 author: 'Yorushika'
 category: 'JPop'
 img: '/images/song-img-1.jpg'
+releaseDate: 'May 8 2023'
 ytlink: '1IlTeOMCNJU'
 lyrics: |
     君の右手は頬を突いている

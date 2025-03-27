@@ -3,6 +3,7 @@ title: '思想犯 - Thoughtcrime'
 author: 'Yorushika'
 category: 'JPop'
 img: '/images/song-img-3.jpg'
+releaseDate: 'June 24 2020'
 ytlink: 'ENcnYh79dUY'
 lyrics: |
     他人に優しいあんたにこの心がわかるものか

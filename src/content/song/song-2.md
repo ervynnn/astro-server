@@ -3,6 +3,7 @@ title: '斜陽 - Setting Sun'
 author: 'Yorushika'
 category: 'JPop'
 img: '/images/song-img-2.png'
+releaseDate: 'April 5 2023'
 ytlink: 'bqigIHMComE'
 lyrics: |
   頬色に

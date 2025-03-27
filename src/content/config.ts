@@ -8,6 +8,7 @@ const song = defineCollection({
         author: z.string(),
         category: z.enum(["JPop", "Rock", "Alternative", "Ballad"]),
         img: z.string().optional(),
+        releaseDate: z.coerce.date(),
         ytlink: z.string(),
         lyrics: z.string(),
     })

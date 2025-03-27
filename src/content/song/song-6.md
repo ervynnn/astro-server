@@ -3,6 +3,7 @@ title: 'ヒッチコック  - Hitchcock'
 author: 'Yorushika'
 category: 'JPop'
 img: '/images/song-img-6.jpg'
+releaseDate: 'April 11 2018'
 ytlink: 't7MBzMP4OzY'
 lyrics: |
    「雨の匂いに懐かしくなるのは何でなんでしょうか。

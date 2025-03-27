@@ -1,21 +1,32 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
+/* this is only for static site generation pls remove this
+	import { type CollectionEntry, getCollection } from 'astro:content';
+	import { render } from 'astro:content';
+*/
+export const prerender = false;
 import SongLayout from '../../layouts/SongLayout.astro';
-import { render } from 'astro:content';
 
+// this is only for static site generation pls remove this
+/*
 export async function getStaticPaths() {
-	const posts = await getCollection('song');
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
+	const songs = await getCollection('song');
+
+	return songs.map((song) => ({
+		params: { slug: song.id },
+		props: {...song},
 	}));
 }
 type Props = CollectionEntry<'song'>;
 
-const post = Astro.props;
-const { Content } = await render(post);
----
+const song = Astro.props;
+const { Content } = await render(song);
+*/
 
-<SongLayout {...post.data}>
-	<Content />
-</SongLayout>
+const { slug } = Astro.params;
+
+const res = await fetch(`${import.meta.env.SITE}/api/songs/${slug}.json`);
+if (res.status == 404) return Astro.redirect("/404");
+const song = await res.json();
+
+---
+<SongLayout {...song}/>

@@ -5,16 +5,16 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { BlurFade } from "@/components/magicui/blur-fade";
 // data types
 import type { Song } from '@/data/type/song';
+import { Picture } from 'astro:assets';
 
 /*
 const songs = (await getCollection('song')).sort(
 (a, z) => z.data.releaseDate.valueOf() - a.data.releaseDate.valueOf(),);
 */
 
-const res = await fetch(`${import.meta.env.SITE}/api/songs.json`);
+const res = await fetch(`${Astro.url.origin}/api/songs.json`);
 const songs = await res.json();
 songs.sort((a: Song, b: Song) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime());
-
 ---
 
 <BaseLayout>
@@ -23,7 +23,7 @@ songs.sort((a: Song, b: Song) => new Date(b.releaseDate).getTime() - new Date(a.
 			<h2 class="text-primary drop-shadow-[3px_3px_0px_rgba(0,0,0,1)] font-semibold">FAVORITE MUSIC</h2>
 		</div>
 
-		<ul class="grid grid-cols-3 gap-8">
+		<ul class="grid grid-cols-1 md:grid-cols-2 gap-8 xl:grid-cols-3">
 			{
 				songs.map((song: Song, index: number) => (
 					<BlurFade client:visible 
@@ -32,15 +32,22 @@ songs.sort((a: Song, b: Song) => new Date(b.releaseDate).getTime() - new Date(a.
 					direction='right'
 					inView
 					className='flex flex-col items-center'>
-						<li>
 							<a href={`/songs/${song.id}/`} class="flex flex-col gap-2">
-								<img class="w-72 border-1 border-foreground hover:shadow-2xl hover:border-primary hover:border-2 transition-all duration-150" src={String(song.img)} alt="" />
+								<Picture class="w-full border-1 border-foreground hover:shadow-2xl hover:border-primary hover:border-2 transition-all duration-150" 
+									   widths={[300, 400, 500]}
+									   sizes={`(max-width: 1024px) 300px, (max-width: 1280px) 400px, 500px`}
+									   formats={["avif","webp","jpg"]}
+									   inferSize
+									   src={String(song.img)} 
+									   alt={song.title}
+									   pictureAttributes={{
+											class: ""
+									   }} />
 								<div>
-									<h4 class="font-semibold">{song.title}</h4>
+									<h4 class="font-semibold w-72">{song.title}</h4>
 									<p class="text-foreground/60"> {song.author}</p>
 								</div>
 							</a>
-						</li>
 					</BlurFade>
 				))
 			}

@@ -20,7 +20,7 @@ const { title, author, category, img, ytlink, lyrics, releaseDate } = Astro.prop
                 <div class="h-fit items-center mt-8">
                     <h2 class="font-bold text-primary drop-shadow-[2px_2px_0px_rgba(0,0,0,1)]">{title}</h2>
                     <h4 class="font-medium text-white drop-shadow-[1px_1px_0px_rgba(0,0,0,1)]">{author}</h4>
-                    <p class="mt-4 bg-white rounded-md border-1 border-foreground/50 w-fit px-4"> {category} </p>
+                    <p class="mt-4 bg-background rounded-md border-1 border-foreground/50 w-fit px-4"> {category} </p>
                 </div>
                 <p class="flex flex-row gap-2 items-center  font-medium text-slate-100 drop-shadow-[1px_1px_0px_rgba(0,0,0,1)]"><CalendarIcon className='w-6'/> {releaseDate}</p>
             </div>

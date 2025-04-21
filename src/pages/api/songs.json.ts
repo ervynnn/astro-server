@@ -1,18 +1,20 @@
 import db from "@/lib/db";
 import type { APIRoute } from "astro";
 
-export const GET: APIRoute = async ({ params, request }) => {
+// select all songs
+export const GET: APIRoute = async () => {
   const songs = await db.execute("SELECT * FROM songs");
   return new Response(JSON.stringify(songs.rows));
 };
 
+// add songs
 export const POST: APIRoute = async ({ request }) => {
   const { title, author, category, img, releaseDate, ytlink, lyrics } = await request.json();
 
   if (!title || !author || !category || !img || !releaseDate || !ytlink || !lyrics) throw Error( "Missing required fields." );
   
   const insert = await db.execute(
-    "INSERT INTO songs (title, author, category, img, releaseDate, ytlink, lyrics) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING *",
+    "INSERT INTO songs (title, author, category, img, releaseDate, ytlink, lyrics) VALUES (?, ?, ?, ?, ?, ?, ?)",
     [title, author, category, img, releaseDate, ytlink, lyrics]
   );
 

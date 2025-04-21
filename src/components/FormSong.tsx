@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import sanitize from "sanitize-html";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,45 +17,74 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import ReusableSelect from "@/components/reusable/select";
 import { ToastComponent } from "@/components/reusable/toast";
+// types
+import type { Song } from '@/data/type/song';
 
 const categoryOptions = ['JPop', 'Rock', 'Alternative', 'Ballad'];
 
 const formSchema = z.object({
-    title: z.string().min(2, { message: "Title must be at least 2 characters.", }),
-    author: z.string(),
-    category: z.string(),
-    img: z.string(),
-    releaseDate: z.string(),
-    ytlink: z.string(),
-    lyrics: z.string(),
+    title: z.string().nonempty("Title is required."),
+    author: z.string().nonempty("Author is required."),
+    category: z.string().nonempty("Category is required."),
+    img: z.string().nonempty("Image URL is required."),
+    releaseDate: z.string().nonempty("Release date is required."),
+    ytlink: z.string().nonempty("YouTube link is required."),
+    lyrics: z.string().nonempty("Lyrics are required."),
 })
 
-export function FormSong() {
+export function FormSong({ song }: {song?: Song | null}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: { category: categoryOptions[0] ,releaseDate:  new Date().toISOString().split("T")[0] },
+    defaultValues: { 
+      ...song,
+      category: (song?.category) as unknown as string || categoryOptions[0],
+      releaseDate:  new Date().toISOString().split("T")[0] },
   })
 
   // for function
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const res = await fetch(`${import.meta.env.SITE}/api/songs.json`, {
-      method: "POST",
-      body: JSON.stringify(values)
-    });
-    const result = await res.json();
-    if ( res.status == 200 ){
-      ToastComponent({
-        message: "Song has been added.",
-        description: result.message,
-        variant: "success",
+      let res;
+      if(!song?.id){
+        const title = sanitize(values.title as string);
+        const author = sanitize(values.author as string);
+        const category = sanitize(values.category as string);
+        const img = sanitize(values.img as string);
+        const releaseDate = sanitize(values.releaseDate as string);
+        const ytlink = sanitize(values.ytlink as string);
+        const lyrics = sanitize(values.lyrics as string);
+
+        res = await fetch(`${import.meta.env.SITE}/api/songs.json`, {
+          method: "POST",
+          body: JSON.stringify({
+            title,
+            author,
+            category,
+            img,
+            releaseDate,
+            ytlink,
+            lyrics
+          })
         });
-    }
-    else
-      ToastComponent({
-        message: "Error occured.",
-        description: result.error,
-        variant: "destructive",
+      }else{
+        res = await fetch(`${import.meta.env.SITE}/api/songs/${song.id}.json`, {
+          method: "POST",
+          body: JSON.stringify({ ...values, id: song.id })
         });
+      }
+      const result = await res.json();
+      if ( res.status == 200 ){
+        ToastComponent({
+          message: "Song has been added/updated.",
+          description: result.message,
+          variant: "success",
+          });
+      }
+      else
+        ToastComponent({
+          message: "Error occured.",
+          description: result.error,
+          variant: "destructive",
+          });
   }
 
   return (

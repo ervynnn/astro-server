@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { PencilIcon ,TrashIcon } from "@heroicons/react/24/outline";
 
 const res = await fetch(`${import.meta.env.SITE}/api/songs.json`);
 const songs = await res.json();
@@ -23,9 +23,16 @@ const songs = await res.json();
                     <h4 class="font-semibold">{index + 1}. {song.title}</h4>
                     <p class="text-foreground/60">{song.author}</p>
                 </div>
-                <Button variant={'destructive'} data-id={String(song.id)} aria-label='Delete Songs' client:load>
-                    <TrashIcon/> Delete
-                </Button>
+                <div class="flex gap-4">
+                    <a href={`/add?id=${song.id}`}>
+                        <Button variant={'outline'} onClick={} aria-label='Edit' client:load>
+                            <PencilIcon/> Edit
+                        </Button>
+                    </a>
+                    <Button variant={'destructive'} data-id={String(song.id)} aria-label='Delete' client:load>
+                        <TrashIcon/> Delete
+                    </Button>
+                </div>
             </div>
              <Separator/>
         ))}
@@ -33,7 +40,7 @@ const songs = await res.json();
     <script>
         const deleteBtns = document.querySelectorAll("[data-id]") as NodeListOf<HTMLButtonElement>;
 
-        deleteBtns.forEach(btn => btn.addEventListener("click", async (e) => {
+        deleteBtns.forEach(btn => btn.addEventListener("click", async () => {
             const id = btn.dataset.id;
             const res = await fetch(`/api/songs/${id}.json`,  {
                 method: "DELETE",
